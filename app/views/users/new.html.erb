@@ -1,0 +1,58 @@
+<h1>Novo Usuário</h1>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with model: @user, url: users_path, method: :post do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "erro") %> impediram o cadastro deste usuário:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= f.label :first_name %> <br>
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    <%= f.label :last_name %> <br>
+    <%= f.text_field :last_name %>
+  </p>
+  <p>
+    <%= f.label :email %> <br>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :phone %> <br>
+    <%= f.text_field :phone %>
+  </p>
+  <p>
+    <%= f.label :cpf %> <br>
+    <%= f.text_field :cpf %>
+  </p>
+  <p>
+    <%= f.label :gender %> <br>
+    <%= f.select :gender, ['Feminino', 'Masculino', 'Outro'] %>
+  </p>
+  <p>
+    <%= f.label :profile_type %> <br>
+    <%= f.select :profile_type, ['Guest', 'Back', 'Front'] %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<p><%= link_to 'Voltar para a lista de usuários', users_path %></p>
