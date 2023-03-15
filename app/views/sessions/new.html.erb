@@ -1,16 +1,15 @@
 <h1>Login</h1>
-
-<%= form_with(url: login_path, method: :post) do |f| %>
-  <% if flash[:alert] %>
-    <div class="alert alert-danger">
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :phone, 'Telefone' %>
-    <%= f.text_field :phone, class: 'form-control' %>
+<% if flash[:error] %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:error] %>
   </div>
-
-  <%= f.submit 'Entrar', class: 'btn btn-primary' %>
 <% end %>
+
+<%= form_tag sessions_path, method: :post do %>
+  <div class="form-group">
+    <%= label_tag :phone, 'Telefone' %>
+    <%= text_field_tag :phone, nil, class: 'form-control' %>
+  </div>
+  <%= submit_tag 'Entrar', class: 'btn btn-primary' %>
+<% end %>
+
