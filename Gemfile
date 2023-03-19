@@ -53,8 +53,19 @@ gem 'pg'
 gem 'jwt'
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'bullet'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry-rails'
+  gem 'rswag-specs'
+  gem 'rubocop', '~> 1.29'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'factory_bot_rails'
+  gem 'faker'
+
+  # Audit/Security
+  gem 'brakeman'
+  gem 'bundler-audit'
 end
 
 group :development do
@@ -69,8 +80,11 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  gem 'database_cleaner'
+  gem 'rails-controller-testing'
+  gem 'rspec'
+  gem 'rspec-json_expectations'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
 end

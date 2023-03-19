@@ -1,0 +1,22 @@
+<h1>Entrar com token</h1>
+
+<% if flash[:error] %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
+<%= form_tag verify_token_session_path, method: :post do %>
+  <% if @user && @user.login_token %>
+    <h2>Seu token de login é: <%= @user.login_token %></h2>
+  <% else %>
+    <h2>Nenhum token de login encontrado.</h2>
+  <% end %>
+  <%= hidden_field_tag :phone, @user.phone %>
+  <div class="form-group">
+    <%= label_tag :token, 'Token de login' %>
+    <%= text_field_tag :token, nil, class: 'form-control' %>
+  </div>
+  <%= submit_tag 'Verificar token', class: 'btn btn-primary' %>
+<% end %>
+
