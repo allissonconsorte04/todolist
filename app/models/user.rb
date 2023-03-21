@@ -6,6 +6,8 @@ class User < ApplicationRecord
   validates :phone, uniqueness: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
+  has_one :login_token
+
   def format_cpf_phone
     self.cpf = cpf.gsub(/[^\d]/, '')
     self.phone = phone.gsub(/[^\d]/, '')
