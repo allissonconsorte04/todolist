@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :user_validation_tokens
   has_many :validation_tokens, through: :user_validation_tokens
+  has_many :failed_login_attempts
 
   def format_cpf_phone
     self.cpf = cpf.gsub(/[^\d]/, '')
@@ -19,6 +20,16 @@ class User < ApplicationRecord
     return false if current_token.expired? || current_token.used?
 
     true
+  end
+
+  def blocked?
+    return false unless blocked_at.present?
+
+    (Time.now - blocked_at) < 3.minutes
+  end
+
+  def max_attempts_reached?
+    failed_login_attempts.where(created_at: 3.minutes.ago..DateTime.now).count >= 3
   end
 
   private

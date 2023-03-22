@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(phone: params[:phone])
     return render_invalid_phone_error unless @user.present?
-    return render_blocked_user_error unless @user.enabled?
+    return render_blocked_user_error if @user.blocked?
 
     @token = user.validation_tokens.create
     redirect_to enter_token_session_path(@user)
@@ -37,59 +37,23 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to users_path
     else
-      flash.now[:error] = 'Token inválido'
-      render :enter_token, status: :bad_request
+      handle_failed_attempt
     end
   end
 
   private
 
-  def user
-    @user ||= User.find_by(phone: params[:phone])
-  end
+  def handle_failed_attempt
+    @user.failed_login_attempts.create
 
-  def generate_token; end
-
-  def generate_token_and_redirect
-    token = @user.login_token
-    if token.present? && !token.expired?
-      redirect_to enter_token_session_path(id: token.id)
+    if @user.max_attempts_reached?
+      flash.now[:error] = 'Máximo de tentativas atingidas, tente novamente mais tarde!'
+      @user.update!(blocked_at: DateTime.now)
+      redirect_to new_session_path
     else
-      if token.present?
-        token.update(login_token: SecureRandom.random_number(10**6),
-                     expires_at: Time.now + 3.minutes,
-                     login_count: 0)
-      else
-        token = LoginToken.create(user: @user,
-                                  login_token: SecureRandom.random_number(10**6),
-                                  expires_at: Time.now + 3.minutes,
-                                  login_count: 0)
-      end
-      redirect_to enter_token_session_path(id: token.id)
+      flash.now[:error] = 'Token inválido'
+      render :enter_token, status: :bad_request
     end
-  end
-
-  def update_user_after_login
-    @token.update(login_count: 0)
-  end
-
-  def update_user_wrong_login(phone)
-    @token = LoginToken.find_by(user: User.find_by(phone:))
-
-    if @token.login_count >= 2
-      @token.user.update(blocked: true)
-      render_blocked_user_error
-    else
-      @token.update(login_count: @token.login_count + 1)
-      render_invalid_token(@token.user)
-    end
-  end
-
-  def render_invalid_token(user)
-    @user = User.find_by(phone: user.phone)
-
-    flash.now[:error] = 'Token inválido'
-    render :enter_token, status: :bad_request, locals: { token: @token }
   end
 
   def render_blocked_user_error

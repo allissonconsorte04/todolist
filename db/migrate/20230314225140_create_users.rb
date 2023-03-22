@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :phone, null: false, unique: true
       t.string :cpf, null: false, unique: true
       t.integer :gender, null: false, default: 0
-      t.boolean :enabled, default: true
+      t.datetime :blocked_at
 
       t.timestamps
     end
