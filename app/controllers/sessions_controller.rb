@@ -1,5 +1,3 @@
-require_dependency 'login_token'
-
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!
 
@@ -13,10 +11,11 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(phone: params[:phone])
-    return render_blocked_user_error if @user.blocked?
-    return render_invalid_phone_error unless @user
+    return render_invalid_phone_error unless @user.present?
+    return render_blocked_user_error unless @user.enabled?
 
-    generate_login_token_and_redirect
+    @token = user.validation_tokens.create
+    redirect_to enter_token_session_path(@user)
   end
 
   def destroy
@@ -25,32 +24,33 @@ class SessionsController < ApplicationController
   end
 
   def enter_token
-    @token = LoginToken.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def verify_token
-    @token = LoginToken.find_by(user: User.find_by(phone: params[:phone]), login_token: params[:token])
-    if @token
-      if @token.expired?
+    @user = User.find(params[:user_id])
+    @validation_token = ValidationToken.find_by(token: params[:token])
 
-        binding.pry
-
-        flash.now[:error] = 'Esse token já expirou. Por favor, solicite um novo token.'
-        render :enter_token, status: :bad_request
-      else
-        update_user_after_login
-        session[:user_id] = @token.user.id
-        redirect_to users_path
-      end
+    if @user.valid_token?(params[:token])
+      # update_user_after_login
+      @validation_token.create_validation_token_deny_list
+      session[:user_id] = @user.id
+      redirect_to users_path
     else
-      update_user_wrong_login(params[:phone])
+      flash.now[:error] = 'Token inválido'
+      render :enter_token, status: :bad_request
     end
   end
 
   private
 
-  def token_generator_and_redirect
-    @user = User.find_by(phone: params[:phone])
+  def user
+    @user ||= User.find_by(phone: params[:phone])
+  end
+
+  def generate_token; end
+
+  def generate_token_and_redirect
     token = @user.login_token
     if token.present? && !token.expired?
       redirect_to enter_token_session_path(id: token.id)
@@ -100,9 +100,5 @@ class SessionsController < ApplicationController
   def render_invalid_phone_error
     flash.now[:error] = 'Telefone inválido'
     render :new, status: :bad_request
-  end
-
-  def generate_login_token_and_redirect
-    token_generator_and_redirect
   end
 end

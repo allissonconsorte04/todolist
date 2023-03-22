@@ -6,11 +6,10 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :email, null: false, unique: true
       t.string :phone, null: false, unique: true
       t.string :cpf, null: false, unique: true
-      t.string :gender, null: false
-      t.string :profile_type, null: false
+      t.integer :gender, null: false, default: 0
+      t.boolean :enabled, default: true
 
       t.timestamps
     end
-    add_index :users, :cpf, unique: true
   end
 end

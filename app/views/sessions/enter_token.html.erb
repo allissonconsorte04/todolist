@@ -7,12 +7,7 @@
 <% end %>
 
 <%= form_with url: verify_token_session_path do |form| %>
-  <% if @token %>
-    <h2>Seu token de login é: <%= @token.login_token %></h2>
-  <% else %>
-    <h2>Nenhum token de login encontrado.</h2>
-  <% end %>
-  <%= hidden_field_tag :phone, @token.user.phone %>
+  <%= hidden_field_tag :user_id, @user.id %>
   <div class="form-group">
     <%= form.label :token %>
     <%= form.text_field :token, autofocus: true %>

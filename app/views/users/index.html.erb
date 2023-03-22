@@ -10,7 +10,6 @@
       <th>Telefone</th>
       <th>CPF</th>
       <th>Gênero</th>
-      <th>Tipo do Perfil</th>
       <th></th>
     </tr>
   </thead>
@@ -22,7 +21,6 @@
         <td><%= user.phone %></td>
         <td><%= user.cpf %></td>
         <td><%= user.gender %></td>
-        <td><%= user.profile_type %></td>
         <td><%= link_to 'Editar', edit_user_path(user) %></td>
       </tr>
     <% end %>

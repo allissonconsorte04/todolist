@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_20_230002) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_22_001410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "login_tokens", force: :cascade do |t|
-    t.string "login_token"
-    t.integer "login_count"
-    t.datetime "expires_at", precision: nil
+  create_table "user_validation_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "validation_token_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_login_tokens_on_user_id"
+    t.index ["user_id", "validation_token_id"], name: "index_user_validation_tokens_on_user_id_and_validation_token_id", unique: true
+    t.index ["user_id"], name: "index_user_validation_tokens_on_user_id"
+    t.index ["validation_token_id"], name: "index_user_validation_tokens_on_validation_token_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -30,13 +30,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_20_230002) do
     t.string "email", null: false
     t.string "phone", null: false
     t.string "cpf", null: false
-    t.string "gender", null: false
-    t.string "profile_type", null: false
+    t.integer "gender", default: 0, null: false
+    t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "blocked", default: false
-    t.index ["cpf"], name: "index_users_on_cpf", unique: true
   end
 
-  add_foreign_key "login_tokens", "users"
+  create_table "validation_token_deny_lists", force: :cascade do |t|
+    t.bigint "validation_token_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["validation_token_id"], name: "index_validation_token_deny_lists_on_validation_token_id"
+  end
+
+  create_table "validation_tokens", force: :cascade do |t|
+    t.string "token"
+    t.datetime "expires_at", precision: nil, null: false
+    t.datetime "sent_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "user_validation_tokens", "users"
+  add_foreign_key "user_validation_tokens", "validation_tokens"
+  add_foreign_key "validation_token_deny_lists", "validation_tokens"
 end
