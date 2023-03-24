@@ -1,0 +1,22 @@
+<h1>Lista de Atividades</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Descrição</th>
+      <th>Categoria</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @activities.each do |activity| %>
+      <tr>
+        <td><%= activity.title %></td>
+        <td><%= activity.description %></td>
+        <td><%= activity.category_id %></td>
+        <td><%= activity.status.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
