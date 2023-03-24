@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :user_validation_tokens
   has_many :validation_tokens, through: :user_validation_tokens
   has_many :failed_login_attempts
+  has_many :activities
 
   def format_cpf_phone
     self.cpf = cpf.gsub(/[^\d]/, '')

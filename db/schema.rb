@@ -10,15 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_22_003628) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_230245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string "code", limit: 22, null: false
+    t.string "title", null: false
+    t.text "description"
+    t.bigint "category_id", null: false
+    t.bigint "status_id", null: false
+    t.boolean "public", default: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_activities_on_category_id"
+    t.index ["code"], name: "index_activities_on_code", unique: true
+    t.index ["description"], name: "index_activities_on_description"
+    t.index ["status_id"], name: "index_activities_on_status_id"
+    t.index ["title"], name: "index_activities_on_title"
+    t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "failed_login_attempts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_failed_login_attempts_on_user_id"
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_statuses_on_name", unique: true
   end
 
   create_table "user_validation_tokens", force: :cascade do |t|
@@ -58,6 +89,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_22_003628) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "activities", "categories"
+  add_foreign_key "activities", "statuses"
+  add_foreign_key "activities", "users"
   add_foreign_key "failed_login_attempts", "users"
   add_foreign_key "user_validation_tokens", "users"
   add_foreign_key "user_validation_tokens", "validation_tokens"
