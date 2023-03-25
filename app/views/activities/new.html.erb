@@ -1,0 +1,45 @@
+<h1>Nova atividade</h1>
+<% if @activity.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+
+    <ul>
+      <% @activity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @activity, url: activities_path, method: :post do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :category_id %>
+    <%= f.collection_select(:category_id, Category.all, :id, :name) %>
+  </div>
+
+  <div>
+    <%= f.label :status_id %>
+    <%= f.collection_select(:status_id, Status.all, :id, :name) %>
+  </div>
+
+  <div>
+    <%= f.label :public %>
+    <%= f.check_box :public %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to "Voltar para a lista de atividades", activities_path %>

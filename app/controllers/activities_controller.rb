@@ -8,9 +8,19 @@ class ActivitiesController < ApplicationController
 
   def show; end
 
-  def new; end
+  def new
+    @activity = current_user.activities.new
+  end
 
-  def create; end
+  def create
+    @activity = current_user.activities.new(activity_params)
+    if @activity.save
+      redirect_to activities_path
+    else
+      flash.now[:alert] = @activity.errors.full_messages.to_sentence
+      render :new, status: :bad_request
+    end
+  end
 
   def edit; end
 
@@ -25,8 +35,6 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    binding.pry
-
     @activity.discard
     redirect_to activities_path, notice: 'Atividade deletada com sucesso'
   end
