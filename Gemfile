@@ -51,6 +51,7 @@ gem "bootsnap", require: false
 gem 'cpf_cnpj'
 gem 'pg'
 gem 'jwt'
+gem 'discard'
 
 group :development, :test do
   gem 'bullet'

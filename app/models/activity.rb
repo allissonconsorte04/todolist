@@ -1,9 +1,12 @@
 class Activity < ApplicationRecord
+  include Discard::Model
   belongs_to :status
   belongs_to :user
   belongs_to :category
 
   before_create :generate_code
+
+  default_scope -> { kept }
 
   private
 

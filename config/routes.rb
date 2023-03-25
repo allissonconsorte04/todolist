@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users
-  resources :activities
+  resources :activities, param: :code
 
   resources :sessions, only: %i[new create destroy] do
     member do

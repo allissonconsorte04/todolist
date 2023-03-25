@@ -2,6 +2,10 @@
 
 <%= form_for @activity do |f| %>
   <div>
+      <%= f.label :code %>
+      <%= f.text_field :code %>
+  </div>
+  <div>
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
@@ -21,6 +25,11 @@
     <%= f.collection_select(:status_id, Status.all, :id, :name) %>
   </div>
 
+  <div>
+    <%= f.label :public %>
+    <%= f.text_field :public %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
@@ -28,3 +37,5 @@
 
 <p>Criado por: <%= @activity.user.first_name + ' ' + @activity.user.last_name %></p>
 <%= link_to "Voltar para a lista de atividades", activities_path %>
+<%= form_with url: activity_path(@activity.code), method: :delete do |f| f.submit "Deletar" end %>
+
