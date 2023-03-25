@@ -1,0 +1,6 @@
+<h1><%= @activity.title %></h1>
+<p><%= @activity.description %></p>
+<p>Categoria: <%= @activity.category.name %></p>
+<p>Status: <%= @activity.status.name %></p>
+<p>Criado por: <%= @activity.user.first_name + ' ' + @activity.user.last_name %></p>
+<%= link_to "Voltar para a lista de atividades", activities_path %>

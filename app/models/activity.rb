@@ -1,14 +1,13 @@
 class Activity < ApplicationRecord
   belongs_to :status
-  has_one :user
+  belongs_to :user
+  belongs_to :category
 
   before_create :generate_code
 
   private
 
   def generate_code
-    while self.code.blank? || Activity.exists?(code: self.code)
-      self.code = SecureRandom.hex(11)
-    end
+    self.code = SecureRandom.hex(11) while code.blank? || Activity.exists?(code:)
   end
 end

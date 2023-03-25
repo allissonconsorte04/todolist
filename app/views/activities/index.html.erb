@@ -14,8 +14,10 @@
       <tr>
         <td><%= activity.title %></td>
         <td><%= activity.description %></td>
-        <td><%= activity.category_id %></td>
+        <td><%= activity.category.name %></td>
         <td><%= activity.status.name %></td>
+        <td><%= link_to "Mostrar", activity_path(activity.code) %></td>
+        <td><%= link_to "Editar", edit_activity_path(activity.code) %></td>
       </tr>
     <% end %>
   </tbody>

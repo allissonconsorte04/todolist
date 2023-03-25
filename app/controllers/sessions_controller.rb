@@ -12,7 +12,8 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(phone: params[:phone])
     return render_invalid_phone_error unless @user.present?
-    return render_blocked_user_error if @user.blocked?    
+    return render_blocked_user_error if @user.blocked?
+
     @token = @user.validation_tokens.create
     redirect_to enter_token_session_path(@user)
   end
@@ -34,7 +35,7 @@ class SessionsController < ApplicationController
       # update_user_after_login
       @validation_token.create_validation_token_deny_list
       session[:user_id] = @user.id
-      redirect_to users_path
+      redirect_to activities_path
     else
       handle_failed_attempt
     end
