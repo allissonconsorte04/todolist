@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_26_020856) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_26_023258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -46,6 +46,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_020856) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_failed_login_attempts_on_user_id"
+  end
+
+  create_table "profile_visitors", force: :cascade do |t|
+    t.bigint "visitee_id", null: false
+    t.bigint "visitator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["visitator_id"], name: "index_profile_visitors_on_visitator_id"
+    t.index ["visitee_id"], name: "index_profile_visitors_on_visitee_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -99,6 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_020856) do
   add_foreign_key "activities", "statuses"
   add_foreign_key "activities", "users"
   add_foreign_key "failed_login_attempts", "users"
+  add_foreign_key "profile_visitors", "users", column: "visitator_id"
+  add_foreign_key "profile_visitors", "users", column: "visitee_id"
   add_foreign_key "user_validation_tokens", "users"
   add_foreign_key "user_validation_tokens", "validation_tokens"
   add_foreign_key "validation_token_deny_lists", "validation_tokens"

@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :validation_tokens, through: :user_validation_tokens
   has_many :failed_login_attempts
   has_many :activities
+  has_many :visitators, class_name: 'ProfileVisitor', foreign_key: :visitator_id
 
   GENDERS = {
     MALE: 'male',
