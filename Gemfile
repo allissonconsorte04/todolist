@@ -52,6 +52,8 @@ gem 'cpf_cnpj'
 gem 'pg'
 gem 'jwt'
 gem 'discard'
+gem 'carrierwave'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'bullet'

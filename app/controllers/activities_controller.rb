@@ -25,8 +25,7 @@ class ActivitiesController < ApplicationController
   def edit; end
 
   def update
-    params[:code] = params[:activity][:code]
-    set_activity
+    @activity = Activity.find_by(code: activity_params[:code])
     if @activity.update(activity_params)
       redirect_to activities_path, notice: 'Atividade atualizada com sucesso'
     else
@@ -51,7 +50,7 @@ class ActivitiesController < ApplicationController
 
   def public_activity?
     return true if current_user == @activity.user
-    return true if @activity.public == true
+    return true if @activity[:public] == true
 
     redirect_to activities_path
   end

@@ -14,4 +14,6 @@ Rails.application.routes.draw do
       post :verify
     end
   end
+
+  resources :profiles, only: [:show], param: :uuid
 end

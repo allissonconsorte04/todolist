@@ -45,7 +45,7 @@
   </p>
   <p>
     <%= f.label :gender %> <br>
-    <%= f.select :gender, ['Feminino', 'Masculino', 'Outro'] %>
+    <%= f.select :gender, User::GENDERS.values %>
   </p>
   <p>
     <%= f.label :profile_type %> <br>

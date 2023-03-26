@@ -11,6 +11,10 @@
     </div>
   <% end %>
   <p>
+    <%= image_tag(@user.avatar_url) if @user.avatar? %>
+    <%= f.file_field :avatar %>
+  </p>
+  <p>
     <%= f.label :first_name %> <br>
     <%= f.text_field :first_name, value: @user.first_name %>
   </p>
@@ -27,12 +31,17 @@
     <%= f.text_field :phone, value: @user.phone %>
   </p>
   <p>
+    <%= f.label :show_phone %> <br>
+    <%= f.radio_button :show_phone, true %> Mostrar
+    <%= f.radio_button :show_phone, false %> Ocultar
+  </p>
+  <p>
     <%= f.label :cpf %> <br>
     <%= f.text_field :cpf, value: @user.cpf.gsub(/\D/, '') %>
   </p>
   <p>
     <%= f.label :gender %> <br>
-    <%= f.select :gender, ['Feminino', 'Masculino', 'Outro'], selected: @user.gender %>
+    <%= f.select :gender, User::GENDERS.values, selected: @user.gender %>
   </p>
   <%= f.submit "Salvar" %>
 <% end %>

@@ -1,0 +1,25 @@
+<h1>Perfil do Usuário</h1>
+<p>
+  <%= @user.first_name %>
+</p>
+<p>
+  <%= @user.last_name %>
+</p>
+<p>
+  <%= @user.email %>
+</p>
+<% if @user.show_phone? %>
+<p>
+  <%= @user.phone %>
+</p>
+<% end %>
+<p>
+  <%= @user.cpf %>
+</p>
+<p>
+  <%= @user.gender %>
+</p>
+
+<% if current_user? %>
+<p><%= link_to 'Editar', edit_user_path(@user) %></p>
+<% end %>

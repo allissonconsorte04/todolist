@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  before_save :format_cpf_phone
+  mount_uploader :avatar, AvatarUploader
+  before_save :format_cpf_phone, :generate_uuid
 
   validates :first_name, :last_name, :email, :phone, :cpf, :gender, presence: true
   validates :cpf, uniqueness: true, cpf: true
@@ -10,6 +11,16 @@ class User < ApplicationRecord
   has_many :validation_tokens, through: :user_validation_tokens
   has_many :failed_login_attempts
   has_many :activities
+
+  GENDERS = {
+    MALE: 'male',
+    FEMALE: 'female',
+    OTHER: 'other'
+  }.freeze
+
+  enum gender: GENDERS.values
+
+  self.per_page = 6
 
   def format_cpf_phone
     self.cpf = cpf.gsub(/[^\d]/, '')
@@ -37,5 +48,9 @@ class User < ApplicationRecord
 
   def current_token
     validation_tokens.last
+  end
+
+  def generate_uuid
+    self.uuid = SecureRandom.uuid
   end
 end
