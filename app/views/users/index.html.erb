@@ -1,32 +1,5 @@
 <%= button_to "Logout", session_path(current_user), method: :delete %>
 
-
 <h1>Lista de Usuários</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>E-mail</th>
-      <th>Telefone</th>
-      <th>CPF</th>
-      <th>Gênero</th>
-      <th>Visitas</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.first_name %> <%= user.last_name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.phone %></td>
-        <td><%= user.cpf %></td>
-        <td><%= user.gender %></td>
-        <td><%= visit_count(user) %></td>
-        <td><%= link_to 'Editar', edit_user_path(user) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= will_paginate @users %>
+<%= render 'users_table' %>
 <p><%= link_to 'Novo Usuário', new_user_path %></p>

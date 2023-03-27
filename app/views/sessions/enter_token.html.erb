@@ -1,16 +1,24 @@
-<h1>Entrar com token</h1>
+<div class="card-base">
+  <div class="card">
+    <h5 class="card-header">Entrar com o Token</h5>
+    <div class="card-body">
+      <% if flash[:error] %>
+      <div class="alert alert-danger" role="alert">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
 
-<% if flash[:error] %>
-  <div class="alert alert-danger" role="alert">
-    <%= flash[:error] %>
+    <%= form_with url: verify_token_session_path do |form| %>
+      <%= hidden_field_tag :user_id, @user.id %>
+      <div class="form-group">
+        <%= form.label :token, class: 'form-label' %>
+        <%= form.text_field :token, autofocus: true, class: 'form-control' %>
+      </div>
+      <%= link_to 'Voltar', new_session_path, class: 'btn btn-secondary' %>
+      <div class="float-end">
+        <%= submit_tag 'Verificar token', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+    </div>
   </div>
-<% end %>
-
-<%= form_with url: verify_token_session_path do |form| %>
-  <%= hidden_field_tag :user_id, @user.id %>
-  <div class="form-group">
-    <%= form.label :token %>
-    <%= form.text_field :token, autofocus: true %>
-  </div>
-  <%= submit_tag 'Verificar token', class: 'btn btn-primary' %>
-<% end %>
+</div>

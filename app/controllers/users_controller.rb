@@ -1,6 +1,22 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:new]
+
   def index
-    @users = User.all.paginate(page: params[:page], per_page: params[:per_page]).order(:id)
+    @users = if params[:query]
+               User.where('LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ?', "%#{params[:query].downcase}%", "%#{params[:query].downcase}%")
+                   .order(:id)
+                   .paginate(page: params[:page], per_page: params[:per_page])
+
+             else
+               User.all.paginate(page: params[:page], per_page: params[:per_page]).order(:id)
+             end
+    respond_to do |format|
+      if turbo_frame_request? && turbo_frame_request_id == 'search'
+        format.html { render partial: 'users_table', locals: { users: @users } }
+      else
+        format.html
+      end
+    end
   end
 
   def new

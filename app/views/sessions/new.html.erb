@@ -1,15 +1,23 @@
-<h1>Login</h1>
-<% if flash[:error] %>
-  <div class="alert alert-danger" role="alert">
-    <%= flash[:error] %>
-  </div>
-<% end %>
+<div class="card-base">
+  <div class="card">
+    <h5 class="card-header">Login</h5>
+    <div class="card-body">
+      <% if flash[:error] %>
+        <div class="alert alert-danger" role="alert">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
 
-<%= form_tag sessions_path, method: :post do %>
-  <div class="form-group">
-    <%= label_tag :phone, 'Telefone' %>
-    <%= text_field_tag :phone, nil, class: 'form-control' %>
+      <%= form_tag sessions_path, method: :post do %>
+        <div class="form-group">
+          <%= label_tag :phone, 'Telefone' %>
+          <%= text_field_tag :phone, nil, class: 'form-control' %>
+        </div>
+        <div class="float-end">
+          <%= submit_tag 'Entrar', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <%= submit_tag 'Entrar', class: 'btn btn-primary' %>
-<% end %>
-
+  <%= link_to "Registre-se", new_user_path, style: 'margin: 10px;' %>
+</div>

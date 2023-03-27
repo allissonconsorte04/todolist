@@ -63,6 +63,7 @@ class SessionsController < ApplicationController
 
   def render_invalid_phone_error
     flash.now[:error] = 'Telefone inválido'
+
     render :new, status: :bad_request
   end
 end

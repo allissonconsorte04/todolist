@@ -2,7 +2,7 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
   before_save :format_cpf_phone, :generate_uuid
 
-  validates :first_name, :last_name, :email, :phone, :cpf, :gender, presence: true
+  validates :first_name, :last_name, :email, :phone, :cpf, :gender, :profile_type, presence: true
   validates :cpf, uniqueness: true, cpf: true
   validates :phone, uniqueness: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -14,10 +14,18 @@ class User < ApplicationRecord
   has_many :visitators, class_name: 'ProfileVisitor', foreign_key: :visitator_id
 
   GENDERS = {
-    MALE: 'male',
-    FEMALE: 'female',
-    OTHER: 'other'
+    MASCULINO: 'Masculino',
+    FEMININO: 'Feminino',
+    OUTRO: 'Outro'
   }.freeze
+
+  PROFILE_TYPES = {
+    VISITANTE: 'Visitante',
+    FRONT_END: 'Front-End',
+    BACK_END: 'Back-End'
+  }.freeze
+
+  enum profile_types: PROFILE_TYPES.values
 
   enum gender: GENDERS.values
 
