@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     enum_to_number
-    binding.pry
 
     if @user.update(user_params)
       redirect_to users_path
