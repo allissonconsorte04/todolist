@@ -54,8 +54,8 @@ gem 'jwt'
 gem 'discard'
 gem 'carrierwave'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap4'
 gem 'bootstrap'
-gem 'importmap-rails'
 
 group :development, :test do
   gem 'bullet'
@@ -92,5 +92,4 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'simplecov'
-  gem 'faker'
 end

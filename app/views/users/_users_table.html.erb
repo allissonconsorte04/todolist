@@ -3,20 +3,38 @@
     <h5 class="card-header">Lista de Usuários</h5>
     <div class="card-body">
       <div class="container">
-        <%= form_with url: users_path, method: :get, data: { turbo_frame: 'search',
-                                                              controller: 'search',
-                                                              action: 'keyup->search#perform' } do |f| %>
-          <%= f.label :query, "Pesquise pelo nome" %>
-          <%= f.text_field :query, value: params[:query] %>
-        <% end %>
+
       </div>
       <%= turbo_frame_tag 'search' do %>
         <table class="table table-striped table-hover">
           <thead>
             <tr>
               <th>Avatar</th>
-              <th>Nome</th>
-              <th>Tipo de Perfil</th>
+              <th style ="padding-left: 0px;">
+              <div class="container" style="display:flex">
+                <div style="align-self: self-end;">Nome</div>
+                <div style="margin-left: 15px;">
+                <%= form_with url: users_path, method: :get, data: { turbo_frame: 'search',
+                                                                      controller: 'search',
+                                                                      action: 'keyup->search#perform' } do |f| %>
+                  <%= f.text_field :query, value: params[:query], class: 'form-control', placeholder: 'Digite algo para buscar' %>
+                <% end %>
+                </div>
+              </div>
+              </th>
+              <th style ="padding-left: 0px;">
+                <div class="container" style="display:flex">
+                <div style="align-self: self-end;">Tipo de Perfil</div>
+                <%# <%= form_with url: users_path, method: :get, data: {  turbo_frame: 'search',
+                                                                      controller: 'search',
+                                                                      action: 'keyup->search#perform' } do |f| %>
+                <%# <%= f.select :profile_type, User::PROFILE_TYPES.invert, { include_blank: true }, { class: 'form-control', id: 'profile-type-select', selected: f.object.profile_type } %>
+
+
+
+                <%# <% end %>
+                </div>
+              </th>
               <th>Visitas</th>
               <th></th>
             </tr>
@@ -34,13 +52,23 @@
                 <td><%= user.first_name %> <%= user.last_name %></td>
                 <td><%= User::PROFILE_TYPES.values[user.profile_type] %></td>
                 <td><%= visit_count(user) %></td>
-                <td><%= link_to 'Mostrar', profile_path(user.uuid), "data-turbo-frame": "users-edit-frame", onclick: "window.location.href='#{profile_path(user.uuid)}'; return false;" %></td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <%= link_to 'Mostrar', profile_path(user.uuid), class: 'btn btn-primary btn-sm', "data-turbo-frame": "users-edit-frame", onclick: "window.location.href='#{profile_path(user.uuid)}'; return false;" %>
+                  </div>
+                </td>
               </tr>
             <% end %>
           </tbody>
         </table>
-          <%= will_paginate @users %>
+        <div class="center-cel">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <%= will_paginate @users %>
+          </ul>
+        </nav>
       <% end %>
+      </div>
     </div>
   </div>
 </div>

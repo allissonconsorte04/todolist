@@ -2,14 +2,17 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new]
 
   def index
-    @users = if params[:query]
-               User.where('LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ?', "%#{params[:query].downcase}%", "%#{params[:query].downcase}%")
-                   .order(:id)
-                   .paginate(page: params[:page], per_page: params[:per_page])
+    @users = User.all.order(:id)
 
-             else
-               User.all.paginate(page: params[:page], per_page: params[:per_page]).order(:id)
-             end
+    if params[:query].present?
+      @users = @users.where('LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ?', "%#{params[:query].downcase}%",
+                            "%#{params[:query].downcase}%")
+    end
+
+    @users = @users.where(profile_type: User.profile_types[params[:profile_type]]) if params[:profile_type].present?
+
+    @users = @users.paginate(page: params[:page], per_page: params[:per_page])
+
     respond_to do |format|
       if turbo_frame_request? && turbo_frame_request_id == 'search'
         format.html { render partial: 'users_table', locals: { users: @users } }
@@ -39,6 +42,9 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    enum_to_number
+    binding.pry
+
     if @user.update(user_params)
       redirect_to users_path
     else
@@ -55,6 +61,12 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :phone, :cpf, :gender, :show_phone, :avatar)
+    params.require(:user).permit(:first_name, :last_name, :email, :phone, :cpf, :gender, :show_phone, :avatar,
+                                 :profile_type)
+  end
+
+  def enum_to_number
+    params[:user][:profile_type] = User::PROFILE_TYPES.values.find_index(params[:user][:profile_type])
+    params[:user][:gender] = User::GENDERS.values.find_index(params[:user][:gender])
   end
 end

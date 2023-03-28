@@ -1,25 +1,65 @@
-<h1>Perfil do Usuário</h1>
-<p>
-  <%= @user.first_name %>
-</p>
-<p>
-  <%= @user.last_name %>
-</p>
-<p>
-  <%= @user.email %>
-</p>
-<% if @user.show_phone? %>
-<p>
-  <%= @user.phone %>
-</p>
-<% end %>
-<p>
-  <%= @user.cpf %>
-</p>
-<p>
-  <%= @user.gender %>
-</p>
-
-<% if current_user? %>
-<p><%= link_to 'Editar', edit_user_path(@user) %></p>
+<%= form_with(model: @user, url: profile_path, method: :get) do |form| %>
+  <div class="container" style="height: 100%; padding-top: 2%;">
+    <div class="row">
+      <div class="col-md-12 mx-auto my-auto">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div>Perfil</div>
+          </div>
+          <div class="card-body" style="flex-direction: row; display: flex;">
+            <div style="flex: 1;">
+              <div class="pt-2">
+                <%= form.label :first_name, class: 'form-label' %>
+                <%= form.text_field :first_name, class: 'form-control', id: 'first_name', readonly: true, disabled: true %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :last_name, class: 'form-label' %>
+                <%= form.text_field :last_name, class: 'form-control', id: 'first_name', readonly: true, disabled: true %>
+              </div>
+              <% if current_user? %>
+                <div class="pt-2">
+                  <%= form.label :cpf, class: 'form-label' %>
+                  <%= form.text_field :cpf, class: 'form-control', id: 'cpf', readonly: true, disabled: true %>
+                </div>
+              <% end %>
+              <div class="pt-2">
+                <%= form.label :email, class: 'form-label' %>
+                <%= form.email_field :email, class: 'form-control', id: 'email', readonly: true, disabled: true %>
+              </div>
+              <% if @user.show_phone? %>
+                <div class="pt-2">
+                  <%= form.label :phone, class: 'form-label' %>
+                  <%= form.text_field :phone, class: 'form-control', id: 'phone', readonly: true, disabled: true %>
+                </div>
+              <% end%>
+              <div class="pt-2">
+                <%= form.label :gender, class: 'form-label' %>
+                <%= form.text_field :gender, class: 'form-control', id: 'gender', readonly: true, disabled: true %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :profile_type, class: 'form-label' %>
+                <%= form.text_field :profile_type, class: 'form-control', id: 'profile_type', readonly: true, disabled: true, value: User::PROFILE_TYPES.values[@user.profile_type] %>
+              </div>
+            </div>
+            <div style="pt-2; display: flex; justify-content: center; align-items: center; flex-direction: column">
+              <div style="margin: 25px; text-align: center;">
+                <label>Foto de Perfil</label><br>
+                <%= image_tag(@user.avatar_url ? @user.avatar_url : 'no-profile-picture-icon', size: '200x200', class: 'rounded-circle') %><br>
+              </div>
+            </div>
+          </div>
+          <div class="pt-2" style="display: flex; justify-content: center;">
+            <div class="form-group">
+              <%= link_to "Voltar", users_path, class: "btn btn-secondary" %>
+            </div>
+            <% if current_user? %>
+              <div class="form-group">
+                <%= link_to 'Editar', edit_user_path(@user), class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

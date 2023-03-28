@@ -1,47 +1,60 @@
-<h1>Editando Usuário</h1>
-<%= form_with model: @user, url: user_path(@user), method: :patch do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "erro") %> impediram a atualização deste usuário:</h2>
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with model: @user, url: user_path(@user), method: :patch do |form| %>
+  <div class="container" style="height: 100%; padding-top: 2%;">
+    <div class="row">
+      <div class="col-md-12 mx-auto my-auto">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div>Editando Usuário</div>
+          </div>
+          <div class="card-body" style="flex-direction: row; display: flex;">
+            <%= render 'shared/error_messages', object: @user %>
+            <div style="flex: 1;">
+              <div class="pt-2">
+                <%= form.label :first_name, class: 'form-label' %>
+                <%= form.text_field :first_name, value: @user.first_name, class: 'form-control', id: 'first_name' %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :last_name, class: 'form-label' %>
+                <%= form.text_field :last_name, value: @user.last_name, class: 'form-control', id: 'first_name' %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :cpf, class: 'form-label' %>
+                <%= form.text_field :cpf, value: @user.cpf, class: 'form-control', id: 'cpf' %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :email, class: 'form-label' %>
+                <%= form.email_field :email, value: @user.email, class: 'form-control', id: 'email' %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :phone, class: 'form-label' %>
+                <%= form.text_field :phone, value: @user.phone, class: 'form-control', id: 'phone' %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :gender, class: 'form-label' %>
+                <%= form.select :gender, User::GENDERS.values, {selected: @user.gender}, class: "form-control" %>
+              </div>
+              <div class="pt-2">
+                <%= form.label :profile_type, class: 'form-label' %>
+                <%= form.select :profile_type, User::PROFILE_TYPES.values, { selected: @user.profile_type }, class: "form-control" %>
+              </div>
+            </div>
+            <div style="pt-2; display: flex; justify-content: center; align-items: center; flex-direction: column">
+              <div style="margin: 25px; text-align: center;">
+                <label>Foto de Perfil</label><br>
+                <%= image_tag(@user.avatar_url ? @user.avatar_url : 'no-profile-picture-icon', size: '200x200', class: 'rounded-circle') %><br>
+              </div>
+            </div>
+          </div>
+          <div class="pt-2" style="display: flex; justify-content: center;">
+            <div class="form-group">
+              <%= link_to "Voltar", profile_path(@user.uuid), class: "btn btn-secondary" %>
+            </div>
+            <div class="form-group">
+              <%= form.submit 'Salvar', class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-  <p>
-    <%= image_tag(@user.avatar_url) if @user.avatar? %>
-    <%= f.file_field :avatar %>
-  </p>
-  <p>
-    <%= f.label :first_name %> <br>
-    <%= f.text_field :first_name, value: @user.first_name %>
-  </p>
-  <p>
-    <%= f.label :last_name %> <br>
-    <%= f.text_field :last_name, value: @user.last_name %>
-  </p>
-  <p>
-    <%= f.label :email %> <br>
-    <%= f.text_field :email, value: @user.email %>
-  </p>
-  <p>
-    <%= f.label :phone %> <br>
-    <%= f.text_field :phone, value: @user.phone %>
-  </p>
-  <p>
-    <%= f.label :show_phone %> <br>
-    <%= f.radio_button :show_phone, true %> Mostrar
-    <%= f.radio_button :show_phone, false %> Ocultar
-  </p>
-  <p>
-    <%= f.label :cpf %> <br>
-    <%= f.text_field :cpf, value: @user.cpf.gsub(/\D/, '') %>
-  </p>
-  <p>
-    <%= f.label :gender %> <br>
-    <%= f.select :gender, User::GENDERS.values, selected: @user.gender %>
-  </p>
-  <%= f.submit "Salvar" %>
+  </div>
 <% end %>
