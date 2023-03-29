@@ -1,0 +1,64 @@
+.list {
+  padding: 0 15px;
+  flex: 0 0 320px;
+  opacity: 1;
+  border-right: solid rgba(192, 208, 230, 0.8);
+  border-width: thin;
+}
+
+.ul {
+  margin-top: 30px;
+}
+
+.header-list {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 42px;
+}
+
+.header-title {
+  font-size: 16px;
+  padding: 0px 10px;
+}
+
+.header-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 18px;
+  background: rgb(0, 195, 255);
+  border: 0px;
+  cursor: pointer;
+}
+
+.list-body {
+  margin-top: 30px;
+}
+
+.activity-card {
+  position: relative;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px;
+  box-shadow: rgba(192, 208, 230, 0.8) 0px 1px 4px 0px;
+  border-top: 20px solid rgba(230, 236, 245, 0.4);
+}
+
+.board {
+  display: flex;
+  padding: 30px 0;
+  height: calc(100% - 80px);
+  margin: 100px;
+  outline: 0px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.header-button-text {
+  justify-content: center;
+  display: flex;
+  font-size: 25px;
+}

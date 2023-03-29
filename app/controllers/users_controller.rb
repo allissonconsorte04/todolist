@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:new]
+  skip_before_action :authenticate_user!, only: %i[new create]
 
   def index
     @users = User.all.order(:id)
@@ -31,13 +31,14 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to users_path
     else
-      flash.now[:alert] = @user.errors.full_messages.to_sentence
+      flash.now[:error] = @user.errors.full_messages.to_sentence
       render :new, status: :bad_request
     end
   end
 
   def edit
     @user = User.find(params[:id])
+    return redirect_to users_path if @user != current_user
   end
 
   def update
@@ -47,6 +48,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path
     else
+      flash.now[:error] = @user.errors.full_messages.to_sentence
       render :edit, status: :bad_request
     end
   end

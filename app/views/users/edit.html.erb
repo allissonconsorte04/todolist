@@ -6,8 +6,8 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <div>Editando Usuário</div>
           </div>
+          <%= render 'shared/error_messages', object: @user %>
           <div class="card-body" style="flex-direction: row; display: flex;">
-            <%= render 'shared/error_messages', object: @user %>
             <div style="flex: 1;">
               <div class="pt-2">
                 <%= form.label :first_name, class: 'form-label' %>
@@ -42,6 +42,7 @@
               <div style="margin: 25px; text-align: center;">
                 <label>Foto de Perfil</label><br>
                 <%= image_tag(@user.avatar_url ? @user.avatar_url : 'no-profile-picture-icon', size: '200x200', class: 'rounded-circle') %><br>
+                <%= form.file_field :avatar, style: 'margin-top: 15px;' %>
               </div>
             </div>
           </div>

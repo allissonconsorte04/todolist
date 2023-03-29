@@ -1,25 +1,20 @@
-<h1>Lista de Atividades</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Título</th>
-      <th>Descrição</th>
-      <th>Categoria</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @activities.each do |activity| %>
-      <tr>
-        <td><%= activity.title %></td>
-        <td><%= activity.description %></td>
-        <td><%= activity.category.name %></td>
-        <td><%= activity.status.name %></td>
-        <td><%= link_to "Mostrar", activity_path(activity.code) %></td>
-        <td><%= link_to "Editar", edit_activity_path(activity.code) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-  <td><%= link_to "Adicionar Atividade", new_activity_path %></td>
-</table>
+<div class="board">
+  <% Status.all.each do |status| %>
+    <div class="list">
+      <div class="header-list">
+      <div class="header-title"><%= status.name%></div>
+        <% if status.id == 1 %>
+          <div class="header-button"type="button">
+            <div class="header-button-text">
+              +
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="list-body">
+        <%= render 'card_index', status_id: status.id, disabled: (status.id == 4) %>
+      </div>
+    </div>
+  <% end %>
+</div>
+

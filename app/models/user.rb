@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :activities
   has_many :visitators, class_name: 'ProfileVisitor', foreign_key: :visitator_id
 
+  attr_readonly :phone
+
   GENDERS = {
     MASCULINO: 'Masculino',
     FEMININO: 'Feminino',

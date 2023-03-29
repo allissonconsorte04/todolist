@@ -2,13 +2,8 @@
   <div class="card">
     <h5 class="card-header">Entrar com o Token</h5>
     <div class="card-body">
-      <% if flash[:error] %>
-      <div class="alert alert-danger" role="alert">
-        <%= flash[:error] %>
-      </div>
-    <% end %>
-
-    <%= form_with url: verify_token_session_path do |form| %>
+      <%= render 'shared/error_messages', object: @user %>
+      <%= form_with url: verify_token_session_path do |form| %>
       <%= hidden_field_tag :user_id, @user.id %>
       <div class="form-group">
         <%= form.label :token, class: 'form-label' %>
