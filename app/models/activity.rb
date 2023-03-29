@@ -6,6 +6,8 @@ class Activity < ApplicationRecord
 
   before_create :generate_code
 
+  validates :title, :description, :category_id, :status_id, presence: true
+
   default_scope -> { kept }
 
   private

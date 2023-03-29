@@ -1,0 +1,53 @@
+<div class="modal fade" id="activityModal-<%= activity.id %>" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="activityModalLabel">Atividade</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'shared/error_messages', object: @activity %>
+
+          <%= form_for(activity, url: activity_path(activity.code), local: true, model: :activity) do |f| %>
+
+            <%= f.hidden_field :code, value: activity.code %>
+
+            <div class="form-group">
+              <%= f.label :title, class: "form-label" %>
+              <%= f.text_field :title, class: "form-control", value: activity.title, required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :description, class: "form-label" %>
+              <%= f.text_area :description, class: "form-control", value: activity.description, required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :category_id, class: "form-label" %>
+              <%= f.collection_select(:category_id, Category.all, :id, :name, {prompt: activity.new_record? ? "Selecione uma categoria" : activity.category.name }, { class: "form-control", required: true }) %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :status_id, class: "form-label" %>
+              <%= f.collection_select(:status_id, Status.all, :id, :name, {prompt: activity.new_record? ? "Selecione um status" : activity.status.name }, {class: "form-control", required: true }) %>
+
+            </div>
+
+            <div class="form-group">
+              <div class="form-group form-check">
+                <%= f.check_box :public, class: "form-check-input", checked: activity[:public] %>
+                <%= f.label :public, class: "form-check-label" %>
+              </div>
+            </div>
+
+            <p>Criado por: <%= activity.user.first_name + ' ' + activity.user.last_name %></p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+          <%= f.submit "Salvar", class: "btn btn-primary" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>

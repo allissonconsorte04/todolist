@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   before_action :public_activity?, only: %i[show edit destroy]
 
   def index
-    @activities = current_user.activities
+    @activities = current_user.activities.order(:id)
   end
 
   def show; end
@@ -17,19 +17,27 @@ class ActivitiesController < ApplicationController
     if @activity.save
       redirect_to activities_path
     else
-      flash.now[:alert] = @activity.errors.full_messages.to_sentence
+      flash.now[:error] = @activity.errors.full_messages.to_sentence
       render :new, status: :bad_request
     end
   end
 
-  def edit; end
+  def edit
+
+    binding.pry
+
+    @activity = Activity.find_by(code: activity_params[:code])
+    render partial: 'activity', locals: { activity: @activity }
+  end
 
   def update
     @activity = Activity.find_by(code: activity_params[:code])
+
     if @activity.update(activity_params)
       redirect_to activities_path, notice: 'Atividade atualizada com sucesso'
     else
-      render :edit
+      flash.now[:error] = @activity.errors.full_messages.to_sentence
+      render partial: 'activity', status: :bad_request
     end
   end
 

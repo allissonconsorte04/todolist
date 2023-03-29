@@ -5,9 +5,7 @@
       <div class="header-title"><%= status.name%></div>
         <% if status.id == 1 %>
           <div class="header-button"type="button">
-            <div class="header-button-text">
-              +
-            </div>
+            <%= link_to "+", new_activity_path, class: 'header-button-text' %>
           </div>
         <% end %>
       </div>

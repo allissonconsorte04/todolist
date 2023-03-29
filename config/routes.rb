@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
 
   resources :profiles, only: [:show], param: :uuid
+
+  get '/activities/:id', to: 'activities#show', format: :json
 end

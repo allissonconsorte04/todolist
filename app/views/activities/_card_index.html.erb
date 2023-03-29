@@ -1,10 +1,6 @@
 <% @activities.where(status_id: status_id).each do |activity| %>
-  <div class="activity-card">
-    <% if disabled %>
-      <li class="list-group-item disabled">
-    <% else %>
-      <li class="list-group-item">
-    <% end %>
+  <div class="activity-card" data-bs-toggle="modal" data-bs-target="#activityModal-<%= activity.id %>" data-controller="activity-card" data-activity-id="<%= activity.id %>%>" data-action="click->activity-card#loadActivity">
+    <li class="list-group-item">
       <h5><%= activity.title %></h5>
       <p>Categoria: <%= activity.category.name %></p>
       <% if activity.public %>
@@ -12,7 +8,11 @@
       <% else %>
         <span class="badge bg-secondary">Privado</span>
       <% end %>
-      <%= link_to "Visualizar", activity_path(activity.code), class: "btn btn-primary btn-sm mt-2" %>
     </li>
   </div>
+
+  <!-- Modal de visualização da atividade -->
+  <%= render 'activity', activity: activity %>
+
 <% end %>
+
