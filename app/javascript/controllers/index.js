@@ -9,3 +9,9 @@ eagerLoadControllersFrom("controllers", application);
 // Lazy load controllers as they appear in the DOM (remember not to preload controllers in import map!)
 // import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
 // lazyLoadControllersFrom("controllers", application)
+
+import TurboController from "./turbo_controller";
+application.register("turbo", TurboController);
+
+import ModalController from "./modal_controller";
+application.register("modal", ModalController);

@@ -3,7 +3,7 @@ class User < ApplicationRecord
   before_save :format_cpf_phone, :generate_uuid
 
   validates :first_name, :last_name, :email, :phone, :cpf, :gender, :profile_type, presence: true
-  validates :cpf, uniqueness: true, cpf: true
+  validates :cpf, uniqueness: true, cpf: true, unless: -> { cpf == self.class.find(id).cpf }
   validates :phone, uniqueness: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :activities
   has_many :visitators, class_name: 'ProfileVisitor', foreign_key: :visitator_id
 
-  attr_readonly :phone
+  attr_readonly :phone, :cpf
 
   GENDERS = {
     MASCULINO: 'Masculino',

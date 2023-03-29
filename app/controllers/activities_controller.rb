@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: %i[show edit update destroy]
+  before_action :set_activity, only: %i[show update edit destroy]
   before_action :public_activity?, only: %i[show edit destroy]
 
   def index
@@ -22,13 +22,7 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def edit
-
-    binding.pry
-
-    @activity = Activity.find_by(code: activity_params[:code])
-    render partial: 'activity', locals: { activity: @activity }
-  end
+  def edit; end
 
   def update
     @activity = Activity.find_by(code: activity_params[:code])
@@ -62,4 +56,6 @@ class ActivitiesController < ApplicationController
 
     redirect_to activities_path
   end
+
+  def set_params; end
 end

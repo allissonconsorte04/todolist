@@ -3,5 +3,7 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import "@hotwired/stimulus";
-import "bootstrap";
+import * as bootstrap from "bootstrap";
 import "jquery";
+
+window.bootstrap = bootstrap;

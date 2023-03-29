@@ -8,7 +8,7 @@
         <div class="modal-body">
           <%= render 'shared/error_messages', object: @activity %>
 
-          <%= form_for(activity, url: activity_path(activity.code), local: true, model: :activity) do |f| %>
+          <%= form_for(activity, url: url, local: true, model: :activity) do |f| %>
 
             <%= f.hidden_field :code, value: activity.code %>
 
@@ -39,8 +39,9 @@
                 <%= f.label :public, class: "form-check-label" %>
               </div>
             </div>
-
-            <p>Criado por: <%= activity.user.first_name + ' ' + activity.user.last_name %></p>
+            <% if activity.user %>
+              <p>Criado por: <%= activity.user.first_name + ' ' + activity.user.last_name %></p>
+            <% end %>
 
         </div>
         <div class="modal-footer">
