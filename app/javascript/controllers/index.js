@@ -15,3 +15,6 @@ application.register("turbo", TurboController);
 
 import ModalController from "./modal_controller";
 application.register("modal", ModalController);
+
+import MaskController from "./mask_controller";
+application.register("mask-controller", MaskController);

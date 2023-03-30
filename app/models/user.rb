@@ -55,6 +55,10 @@ class User < ApplicationRecord
     failed_login_attempts.where(created_at: 3.minutes.ago..DateTime.now).count >= 3
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def current_token
