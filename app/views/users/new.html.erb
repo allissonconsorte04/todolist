@@ -34,7 +34,7 @@
           <%= form.select :profile_type, User::PROFILE_TYPES.values, {}, class: "form-control js-mask-phone" %>
         </div>
         <div class="form-group">
-          <%= link_to "Voltar", users_path, class: "btn btn-secondary" %>
+          <%= link_to "Voltar", request.referrer || users_path, class: "btn btn-secondary" %>
           <div class="float-end">
             <%= form.submit "Salvar", class: "btn btn-primary" %>
           </div>

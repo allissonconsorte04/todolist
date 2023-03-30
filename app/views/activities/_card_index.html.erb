@@ -1,5 +1,6 @@
 <% @activities.where(status_id: status_id).each do |activity| %>
-  <div class="activity-card" data-bs-toggle="modal" data-bs-target="#activityModal-<%= activity.id %>">
+  <div class="activity-card-link" data-bs-toggle="modal" data-bs-target="#activityModal-<%= activity.id %>" data-controller="turbo" href="<%= edit_activity_path(activity.code) %>">
+    <div class="activity-card">
       <li class="list-group-item">
         <h5><%= activity.title %></h5>
         <p>Categoria: <%= activity.category.name %></p>
@@ -8,11 +9,7 @@
         <% else %>
           <span class="badge bg-secondary">Privado</span>
         <% end %>
-        <%= link_to 'Editar', edit_activity_path(activity.code), "data-controller": "turbo", class: 'btn btn-primary' %>
       </li>
+    </div>
   </div>
 <% end %>
-
-
-
-

@@ -6,6 +6,11 @@ class ActivitiesController < ApplicationController
     @activities = current_user.activities.order(:id)
   end
 
+  def public_index
+    redirect_to activities_path if current_user.uuid == params[:user_uuid]
+    @activities = Activity.joins(:user).where(public: true, users: { uuid: params[:user_uuid] })
+  end
+
   def show; end
 
   def new
@@ -25,13 +30,11 @@ class ActivitiesController < ApplicationController
   def edit; end
 
   def update
-    @activity = Activity.find_by(code: activity_params[:code])
-
     if @activity.update(activity_params)
       redirect_to activities_path, notice: 'Atividade atualizada com sucesso'
     else
       flash.now[:error] = @activity.errors.full_messages.to_sentence
-      render partial: 'activity', status: :bad_request
+      render :edit, status: :bad_request
     end
   end
 

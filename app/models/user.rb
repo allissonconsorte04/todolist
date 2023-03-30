@@ -3,7 +3,7 @@ class User < ApplicationRecord
   before_save :format_cpf_phone, :generate_uuid
 
   validates :first_name, :last_name, :email, :phone, :cpf, :gender, :profile_type, presence: true
-  validates :cpf, uniqueness: true, cpf: true, unless: -> { cpf == self.class.find(id).cpf }
+  validates :cpf, uniqueness: true, cpf: true
   validates :phone, uniqueness: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 

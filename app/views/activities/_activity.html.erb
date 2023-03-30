@@ -11,6 +11,7 @@
           <%= form_for(activity, url: url, local: true, model: :activity) do |f| %>
 
             <%= f.hidden_field :code, value: activity.code %>
+            <%= f.hidden_field :user, value: activity.user_id %>
 
             <div class="form-group">
               <%= f.label :title, class: "form-label" %>
@@ -39,14 +40,16 @@
                 <%= f.label :public, class: "form-check-label" %>
               </div>
             </div>
-            <% if activity.user %>
+            <% if activity.user_id %>
               <p>Criado por: <%= activity.user.first_name + ' ' + activity.user.last_name %></p>
             <% end %>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-          <%= f.submit "Salvar", class: "btn btn-primary" %>
+          <% if activity.user == current_user %>
+            <%= f.submit "Salvar", class: "btn btn-primary" %>
+          <% end %>
         </div>
         <% end %>
       </div>

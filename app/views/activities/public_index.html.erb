@@ -1,0 +1,13 @@
+<div class="board">
+  <% Status.all.each do |status| %>
+    <div class="list">
+      <div class="header-list">
+      <div class="header-title"><%= status.name%></div>
+      </div>
+      <div class="list-body">
+        <%= render 'card_index', status_id: status.id %>
+      </div>
+    </div>
+  <% end %>
+</div>
+

@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
 
   resources :profiles, only: [:show], param: :uuid
+  get 'activities/public/:user_uuid', to: 'activities#public_index', as: 'public_activities'
 end

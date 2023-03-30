@@ -1,1 +1,3 @@
-<%= render "form", activity: @activity %>
+<%= form_with model: @activity, url: activities_path, method: :post do |f| %>
+  <%= render "form", activity: @activity %>
+<% end %>
