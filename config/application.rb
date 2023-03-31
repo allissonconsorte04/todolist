@@ -25,5 +25,6 @@ module Todolist
     end
 
     config.time_zone = 'UTC'
+    config.autoload_paths << Rails.root.join('app', 'serializers')
   end
 end

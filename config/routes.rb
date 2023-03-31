@@ -19,4 +19,10 @@ Rails.application.routes.draw do
 
   resources :profiles, only: [:show], param: :uuid
   get 'activities/public/:user_uuid', to: 'activities#public_index', as: 'public_activities'
+
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:index]
+    end
+  end
 end

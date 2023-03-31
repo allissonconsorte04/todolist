@@ -30,6 +30,12 @@
                 <%= form.text_field :phone, value: @formatted_phone_number, class: 'form-control', id: 'phone', readonly: true, disabled: true %>
               </div>
               <div class="pt-2">
+                <div class="form-group form-check">
+                  <%= form.check_box :show_phone, class: "form-check-input" %>
+                  <%= form.label :show_phone, class: "form-check-label" %>
+                </div>
+              </div>
+              <div class="pt-2">
                 <%= form.label :gender, class: 'form-label' %>
                 <%= form.select :gender, User::GENDERS.values, {selected: @user.gender}, class: "form-control" %>
               </div>

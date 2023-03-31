@@ -3,9 +3,9 @@ class User < ApplicationRecord
   before_save :format_cpf_phone, :generate_uuid
 
   validates :first_name, :last_name, :email, :phone, :cpf, :gender, :profile_type, presence: true
-  validates :cpf, uniqueness: true, cpf: true
-  validates :phone, uniqueness: true
-  validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :cpf, uniqueness: { on: :create }, cpf: true
+  validates :phone, uniqueness: { on: :create }
+  validates :email, uniqueness: { on: :create }, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   has_many :user_validation_tokens
   has_many :validation_tokens, through: :user_validation_tokens

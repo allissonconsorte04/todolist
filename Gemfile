@@ -56,6 +56,7 @@ gem 'carrierwave'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem 'bootstrap'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'bullet'
