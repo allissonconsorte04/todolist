@@ -19,7 +19,7 @@
               </div>
               <div class="pt-2">
                 <%= form.label :cpf, class: 'form-label' %>
-                <%= form.text_field :cpf, value: @user.cpf, class: 'form-control', id: 'cpf', readonly: true, disabled: true %>
+                <%= form.text_field :cpf, value: @formatted_cpf, class: 'form-control', id: 'cpf', readonly: true, disabled: true %>
               </div>
               <div class="pt-2">
                 <%= form.label :email, class: 'form-label' %>
@@ -27,7 +27,7 @@
               </div>
               <div class="pt-2">
                 <%= form.label :phone, class: 'form-label' %>
-                <%= form.text_field :phone, value: @user.phone, class: 'form-control', id: 'phone', readonly: true, disabled: true %>
+                <%= form.text_field :phone, value: @formatted_phone_number, class: 'form-control', id: 'phone', readonly: true, disabled: true %>
               </div>
               <div class="pt-2">
                 <%= form.label :gender, class: 'form-label' %>

@@ -1,8 +1,11 @@
 class ProfilesController < ApplicationController
+  include ApplicationHelper
   skip_before_action :authenticate_user!
 
   def show
     @user = User.find_by(uuid: params[:uuid])
+    @formatted_phone_number = format_phone_number(@user.phone)
+    @formatted_cpf = format_cpf(@user.cpf)
     count_visit
   end
 

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include ApplicationHelper
+
   skip_before_action :authenticate_user!, only: %i[new create]
 
   def index
@@ -38,6 +40,8 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @formatted_phone_number = format_phone_number(@user.phone)
+    @formatted_cpf = format_cpf(@user.cpf)
     return redirect_to users_path if @user != current_user
   end
 
