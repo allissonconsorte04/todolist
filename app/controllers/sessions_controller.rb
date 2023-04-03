@@ -19,6 +19,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    LogLoginLogout.create!(user_id: params[:id], status: 'logout')
+
     session[:user_id] = nil
     redirect_to new_session_path
   end
@@ -35,6 +37,7 @@ class SessionsController < ApplicationController
       # update_user_after_login
       @validation_token.create_validation_token_deny_list
       LogLogin.create!(user_id: @user.id, status: 'success')
+      LogLoginLogout.create!(user_id: @user.id, status: 'login')
       session[:user_id] = @user.id
       redirect_to activities_path
     else

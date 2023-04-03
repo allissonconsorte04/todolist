@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_194017) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_03_211053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -48,12 +48,38 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_194017) do
     t.index ["user_id"], name: "index_failed_login_attempts_on_user_id"
   end
 
+  create_table "log_activities", force: :cascade do |t|
+    t.bigint "activity_id"
+    t.string "event"
+    t.json "modifications", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_log_activities_on_activity_id"
+  end
+
+  create_table "log_login_logouts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_log_login_logouts_on_user_id"
+  end
+
   create_table "log_logins", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_log_logins_on_user_id"
+  end
+
+  create_table "log_profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "event"
+    t.json "modifications", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_log_profiles_on_user_id"
   end
 
   create_table "profile_visitors", force: :cascade do |t|
@@ -117,7 +143,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_194017) do
   add_foreign_key "activities", "statuses"
   add_foreign_key "activities", "users"
   add_foreign_key "failed_login_attempts", "users"
+  add_foreign_key "log_login_logouts", "users"
   add_foreign_key "log_logins", "users"
+  add_foreign_key "log_profiles", "users"
   add_foreign_key "profile_visitors", "users", column: "visitator_id"
   add_foreign_key "profile_visitors", "users", column: "visitee_id"
   add_foreign_key "user_validation_tokens", "users"

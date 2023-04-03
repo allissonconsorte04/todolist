@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
   before_save :format_cpf_phone, :generate_uuid
+  after_update :create_profile_log
 
   validates :first_name, :last_name, :email, :phone, :cpf, :gender, :profile_type, presence: true
   validates :cpf, uniqueness: { on: :create }, cpf: true
@@ -67,5 +68,13 @@ class User < ApplicationRecord
 
   def generate_uuid
     self.uuid = SecureRandom.uuid
+  end
+
+  def create_profile_log
+    LogProfile.create!(
+      user_id: id,
+      event: 'user_updated',
+      modifications: previous_changes
+    )
   end
 end
