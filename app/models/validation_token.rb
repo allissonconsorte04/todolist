@@ -4,6 +4,7 @@ class ValidationToken < ApplicationRecord
   has_one :validation_token_deny_list
 
   before_create :set_expiration_time, :generate_token
+  # after_create :send_verification_sms
 
   def expired?
     expires_at < Time.now
@@ -21,5 +22,9 @@ class ValidationToken < ApplicationRecord
 
   def generate_token
     self.token = Array(0..5).map { rand(0..9) }.join
+  end
+
+  def send_verification_sms
+    SmsService.send_sms(user.phone, token)
   end
 end

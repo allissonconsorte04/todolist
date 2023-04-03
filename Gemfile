@@ -57,6 +57,8 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem 'bootstrap'
 gem 'active_model_serializers'
+gem 'twilio-ruby'
+gem 'dotenv'
 
 group :development, :test do
   gem 'bullet'
