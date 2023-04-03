@@ -1,18 +1,18 @@
 # Gerenciador de Atividades para Usuários
 
-Uma aplicação web em Rails 7 para gerenciamento de atividades dos usuários.
+Uma aplicação web em Rails para gerenciamento de atividades de usuários.
 
 ## Funcionalidades
 
 - CRUD de atividades para usuários autenticados
 - Filtragem e ordenação de atividades
 - Histórico de modificações das atividades
-- Integração com API externa de clima para exibição da temperatura na listagem das atividades
+- Integração com API externa de SMS para login
 
 ## Pré-requisitos
 
-- Ruby 3.1.0
-- Rails 7.0.0
+- Ruby 3.2.0
+- Rails 7.0.4
 - PostgreSQL
 
 ## Instalação
