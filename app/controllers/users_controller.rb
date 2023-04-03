@@ -11,7 +11,9 @@ class UsersController < ApplicationController
                             "%#{params[:query].downcase}%")
     end
 
-    @users = @users.where(profile_type: User.profile_types[params[:profile_type]]) if params[:profile_type].present?
+    if params[:profile_type] != 'Todos' && params[:profile_type].present?
+      @users = @users.where(profile_type: User.profile_types[params[:profile_type]])
+    end
 
     @users = @users.paginate(page: params[:page], per_page: params[:per_page])
 

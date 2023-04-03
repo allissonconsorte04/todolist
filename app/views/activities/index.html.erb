@@ -1,8 +1,18 @@
+<div style="justify-content: center; display: flex;">
+  <div class="search-bar">
+    <%= form_with url: activities_path, method: :get, data: { turbo_frame: 'search',
+                                                      controller: 'search',
+                                                      action: 'keyup->search#perform' } do |f| %>
+      <%= f.label :query, 'Buscar:' %>
+      <%= f.text_field :query, value: params[:query], class: 'form-control', placeholder: 'Digite algo para buscar' %>
+    <% end %>
+  </div>
+</div>
 <div class="board">
   <% Status.all.each do |status| %>
     <div class="list">
       <div class="header-list">
-      <div class="header-title"><%= status.name%></div>
+        <div class="header-title"><%= status.name%></div>
         <% if status.id == 1 %>
           <div class="header-button"type="button">
             <%= link_to "+", new_activity_path, "data-controller": "turbo", class: 'header-button-text' %>
@@ -15,4 +25,3 @@
     </div>
   <% end %>
 </div>
-

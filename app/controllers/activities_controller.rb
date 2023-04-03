@@ -4,6 +4,18 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = current_user.activities.order(:id)
+
+    if params[:query].present?
+      @activities = @activities.where('LOWER(title) LIKE ? OR LOWER(description) LIKE ?', "%#{params[:query].downcase}%",
+                                      "%#{params[:query].downcase}%")
+    end
+    respond_to do |format|
+      if turbo_frame_request? && turbo_frame_request_id == 'search'
+        format.html { render partial: 'card_index', locals: { activities: @activities } }
+      else
+        format.html
+      end
+    end
   end
 
   def public_index

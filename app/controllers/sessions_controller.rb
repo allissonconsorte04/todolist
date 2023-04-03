@@ -34,9 +34,11 @@ class SessionsController < ApplicationController
     if @user.valid_token?(params[:token])
       # update_user_after_login
       @validation_token.create_validation_token_deny_list
+      LogLogin.create!(user_id: @user.id, status: 'success')
       session[:user_id] = @user.id
       redirect_to activities_path
     else
+      LogLogin.create(user_id: @user.id, status: 'failed')
       handle_failed_attempt
     end
   end

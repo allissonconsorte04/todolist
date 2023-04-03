@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_192813) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_03_194017) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -46,6 +46,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_192813) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_failed_login_attempts_on_user_id"
+  end
+
+  create_table "log_logins", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_log_logins_on_user_id"
   end
 
   create_table "profile_visitors", force: :cascade do |t|
@@ -109,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_192813) do
   add_foreign_key "activities", "statuses"
   add_foreign_key "activities", "users"
   add_foreign_key "failed_login_attempts", "users"
+  add_foreign_key "log_logins", "users"
   add_foreign_key "profile_visitors", "users", column: "visitator_id"
   add_foreign_key "profile_visitors", "users", column: "visitee_id"
   add_foreign_key "user_validation_tokens", "users"
