@@ -1,0 +1,71 @@
+pt:
+  activerecord:
+    models:
+      user: Usuário
+      activity: Atividade
+      category: Categoria
+      status: Status
+    attributes:
+      user:
+        first_name: Primeiro Nome
+        last_name: Sobrenome
+        email: E-mail
+        phone: Telefone
+        cpf: CPF
+        gender: Gênero
+        show_phone: Telefone Público
+        avatar: Imagem de Perfil
+        profile_type: Tipo de Perfil
+      activity:
+        title: Título
+        description: Descrição
+        category: Categoria
+        category_id: Categoria
+        status: Status
+        status_id: Status
+        public: Público
+      category:
+        name: Nome
+      status:
+        name: Nome
+    errors:
+      models:
+        user:
+          attributes:
+            first_name:
+              blank: "O nome não pode ficar em branco"
+            last_name:
+              blank: "O sobrenome não pode ficar em branco"
+            email:
+              blank: "O e-mail não pode ficar em branco"
+              taken: "Já existe um usuário cadastrado com este e-mail"
+              invalid: "O e-mail é inválido"
+            phone:
+              blank: "O telefone não pode ficar em branco"
+              taken: "Já existe um usuário cadastrado com este telefone"
+            cpf:
+              blank: "O CPF não pode ficar em branco"
+              taken: "Já existe um usuário cadastrado com este CPF"
+              invalid: "O CPF é inválido"
+            gender:
+              blank: "O gênero não pode ficar em branco"
+            profile_type:
+              blank: "O tipo de perfil não pode ficar em branco"
+        activity:
+          attributes:
+            status:
+              required: "deve ser informado"
+            category:
+              required: "deve ser informada"
+            title:
+              blank: "não pode ficar em branco"
+            description:
+              blank: "não pode ficar em branco"
+            category_id:
+              blank: "não pode ficar em branco"
+            status_id:
+              blank: "não pode ficar em branco"
+            code:
+              taken: "já está em uso"
+
+

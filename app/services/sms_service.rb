@@ -13,7 +13,7 @@ class SmsService
     client.messages.create(
       to: "+55#{to}",
       from: ENV['TWILIO_FROM_NUMBER'],
-      body: message
+      body: "O seu código de verificação é: #{message}"
     )
   end
 end

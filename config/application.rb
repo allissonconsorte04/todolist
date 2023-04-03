@@ -26,5 +26,8 @@ module Todolist
 
     config.time_zone = 'UTC'
     config.autoload_paths << Rails.root.join('app', 'serializers')
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.available_locales = %i[en pt]
+    config.i18n.default_locale = :pt
   end
 end
