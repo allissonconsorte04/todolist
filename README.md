@@ -4,8 +4,9 @@ Uma aplicação web em Rails para gerenciamento de atividades de usuários.
 
 ## Funcionalidades
 
-- CRUD de atividades para usuários autenticados
+- CRUD de atividades para usuários
 - Filtragem e ordenação de atividades
+- Listagem de Usuários e suas respectivas Atividades
 - Integração com API externa de SMS para login
 
 ## Pré-requisitos
